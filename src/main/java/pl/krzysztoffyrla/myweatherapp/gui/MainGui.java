@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @StyleSheet("/css/style.css")
 public class MainGui extends VerticalLayout {
 
-    public MainGui() {
+    public MainGui() { //init
         setHeader();
         setLogo();
         setForm();
