@@ -6,6 +6,7 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
  * @author Krzysztof
  * @project my-weather-app
  */
+@Service
 public class WeatcherService {
 
     private OkHttpClient client;
@@ -25,7 +27,7 @@ public class WeatcherService {
         client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://api.openweathermap.org/data/2.5/weather?q=" + getCityName() + "&units=" + getUnit()
-                        + "")
+                        + "&APPID=")
                 .build();
 
         try {

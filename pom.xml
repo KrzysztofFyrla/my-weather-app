@@ -57,6 +57,11 @@
             <artifactId>json</artifactId>
             <version>20171018</version>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>8.1.0</version>
+        </dependency>
 
     </dependencies>
 
