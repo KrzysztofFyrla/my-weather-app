@@ -42,7 +42,7 @@ public class MainGui extends VerticalLayout {
     private Select<String> selectTemperature;
     private Image iconImg;
 
-    public MainGui() {
+    public MainGui() {  // init
         iconImg = new Image();
         setHeader();
         setLogo();
