@@ -6,14 +6,11 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.server.ExternalResource;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,6 @@ import pl.krzysztoffyrla.myweatherapp.controller.WeatcherService;
 
 import java.util.ArrayList;
 
-import static com.vaadin.flow.component.notification.Notification.Position.BOTTOM_CENTER;
 import static com.vaadin.flow.component.notification.Notification.Position.MIDDLE;
 
 /**
@@ -35,10 +31,13 @@ public class MainGui extends VerticalLayout {
     @Autowired
     private WeatcherService weatcherService;
 
+    private HorizontalLayout dashboardLayout;
     private Button searchButton;
     private TextField citiesTextField;
     private Label locationLabel;
     private Label tempLabel;
+    private Label weatcherDescription;
+    private Label minWeatcher;
     private Select<String> selectTemperature;
     private Image iconImg;
 
@@ -82,7 +81,6 @@ public class MainGui extends VerticalLayout {
 
     public void setForm() {
         //Select temperature
-        iconImg = new Image();
         selectTemperature = new Select<>();
         ArrayList<String> items = new ArrayList<>();
         items.add("C");
@@ -106,15 +104,18 @@ public class MainGui extends VerticalLayout {
     }
 
     public void setCietiesTemp() {
-        locationLabel = new Label("Currently in Katowice");
+        locationLabel = new Label("Please select a city");
         locationLabel.addClassName("locationLabel");
-        tempLabel = new Label("10 C");
+        tempLabel = new Label("");
         tempLabel.addClassName("tempLabel");
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout(locationLabel, iconImg, tempLabel);
+        HorizontalLayout horizontalLayout = new HorizontalLayout(locationLabel, tempLabel);
+        HorizontalLayout horizontalLayout2 = new HorizontalLayout(iconImg);
         horizontalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        horizontalLayout2.setJustifyContentMode(JustifyContentMode.CENTER);
         horizontalLayout.setWidth("100%");
-        add(horizontalLayout);
+        horizontalLayout2.setWidth("100%");
+        add(horizontalLayout, horizontalLayout2);
     }
 
     public void setDashboard() {
@@ -122,11 +123,12 @@ public class MainGui extends VerticalLayout {
         Label humidityLanel = new Label("Humidity: 23");
         Label windLabel = new Label("Wind: 231");
         Label feelsLikeLabel = new Label("Feels Like: 231 Pa");
+        //minWeatcher.setText("Min Temp: " + weatcherService.returnMain().getInt("temp_min"));
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout(pressureLabel, humidityLanel, windLabel, feelsLikeLabel);
-        horizontalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        horizontalLayout.setWidth("100%");
-        add(horizontalLayout);
+        dashboardLayout = new HorizontalLayout(pressureLabel, humidityLanel, windLabel, feelsLikeLabel);
+        dashboardLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        dashboardLayout.setWidth("100%");
+        //add(horizontalLayout);
     }
 
     public void updateUI() {
@@ -144,10 +146,12 @@ public class MainGui extends VerticalLayout {
             defaultUnit = "\u00b0" + "F";
         }
 
-        locationLabel.setText("Currently in " + city);
+        locationLabel.setText("Currently in " + city + ":");
         JSONObject mainObject = weatcherService.returnMain();
         int temp = mainObject.getInt("temp");
         tempLabel.setText(temp + defaultUnit);
+
+
 
         // Icon from API
         String iconCode = null;
@@ -159,7 +163,11 @@ public class MainGui extends VerticalLayout {
             weatcherDescriptionNew = weatherObj.getString("description");
         }
 
-        //iconImg.setSource(new ExternalResource("http://openweathermap.org/img/wn/" + iconCode + "@2x.png"));
-        //iconImg.setSrc(String.valueOf(new ExternalResource("http://openweathermap.org/img/wn/" + iconCode + "@2x.png")));
+        iconImg.setSrc("http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+
+        //weatcherDescription.setText("Description: " + weatcherDescriptionNew);
+        //minWeatcher.setText("Min Temp: " + weatcherService.returnMain().getInt("temp_min"));
+
+        add(dashboardLayout);
     }
 }

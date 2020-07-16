@@ -21,13 +21,13 @@ public class WeatcherService {
     private Response response;
     private String CityName;
     String unit;
-    private String API = "";
+    private String API = "a41d20f8afc03e826e651eed98ae2b3c";
 
     public JSONObject getWeatcher() {
         client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://api.openweathermap.org/data/2.5/weather?q=" + getCityName() + "&units=" + getUnit()
-                        + "&APPID=")
+                        + "&appid=fc861b15cec068db87baa14588b752a8")
                 .build();
 
         try {
