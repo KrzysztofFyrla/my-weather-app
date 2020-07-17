@@ -32,16 +32,21 @@ public class MainGui extends VerticalLayout {
     private WeatcherService weatcherService;
 
     private HorizontalLayout dashboardLayout;
+    private HorizontalLayout dashboardLayout2;
     private Button searchButton;
     private TextField citiesTextField;
     private Label locationLabel;
     private Label tempLabel;
     private Label weatcherDescription;
-    private Label minWeatcher;
+    private Label minTempLabel;
+    private Label maxTempLabel;
+    private Label pressureLabel;
+    private Label humidityLanel;
+    private Label windLabel;
     private Select<String> selectTemperature;
     private Image iconImg;
 
-    public MainGui() {  // init
+    public MainGui() {
         iconImg = new Image();
         setHeader();
         setLogo();
@@ -53,7 +58,6 @@ public class MainGui extends VerticalLayout {
            if(!citiesTextField.getValue().equals("")){
                updateUI();
            } else {
-               //Notification.show("Please Enter The City Name");
                Notification.show("Please Enter The City Name", 2000 , MIDDLE);
            }
         });
@@ -119,16 +123,20 @@ public class MainGui extends VerticalLayout {
     }
 
     public void setDashboard() {
-        Label pressureLabel = new Label("Pressure: 231 Pa");
-        Label humidityLanel = new Label("Humidity: 23");
-        Label windLabel = new Label("Wind: 231");
-        Label feelsLikeLabel = new Label("Feels Like: 231 Pa");
-        //minWeatcher.setText("Min Temp: " + weatcherService.returnMain().getInt("temp_min"));
+        pressureLabel = new Label();
+        humidityLanel = new Label();
+        windLabel = new Label();
 
-        dashboardLayout = new HorizontalLayout(pressureLabel, humidityLanel, windLabel, feelsLikeLabel);
+        minTempLabel = new Label();
+        maxTempLabel = new Label();
+
+        dashboardLayout = new HorizontalLayout(pressureLabel, humidityLanel, windLabel);
         dashboardLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         dashboardLayout.setWidth("100%");
-        //add(horizontalLayout);
+
+        dashboardLayout2 = new HorizontalLayout(minTempLabel, maxTempLabel);
+        dashboardLayout2.setJustifyContentMode(JustifyContentMode.CENTER);
+        dashboardLayout2.setWidth("100%");
     }
 
     public void updateUI() {
@@ -151,7 +159,20 @@ public class MainGui extends VerticalLayout {
         int temp = mainObject.getInt("temp");
         tempLabel.setText(temp + defaultUnit);
 
+        int pressure = mainObject.getInt("pressure");
+        pressureLabel.setText("Pressure: " + pressure + " Pa");
 
+        int humidity = mainObject.getInt("humidity");
+        humidityLanel.setText("Humidity: " + humidity + "%");
+
+        JSONObject windObject = weatcherService.returnWind();
+        int wind = windObject.getInt("speed");
+        windLabel.setText("Wind speed: " + wind + " m/s");
+
+        int tempMin = mainObject.getInt("temp_min");
+        minTempLabel.setText("Temp min: " + tempMin + defaultUnit);
+        int tempMax = mainObject.getInt("temp_max");
+        maxTempLabel.setText("Temp max: " + tempMax + defaultUnit);
 
         // Icon from API
         String iconCode = null;
@@ -165,9 +186,7 @@ public class MainGui extends VerticalLayout {
 
         iconImg.setSrc("http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
 
-        //weatcherDescription.setText("Description: " + weatcherDescriptionNew);
-        //minWeatcher.setText("Min Temp: " + weatcherService.returnMain().getInt("temp_min"));
-
         add(dashboardLayout);
+        add(dashboardLayout2);
     }
 }
