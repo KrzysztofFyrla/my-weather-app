@@ -47,7 +47,6 @@ public class MainGui extends VerticalLayout {
     private Image iconImg;
 
     public MainGui() {
-        //this.getElement().getStyle().set("background-image", "url('QhZN6g.jpg");
         iconImg = new Image();
         setHeader();
         setLogo();
