@@ -1,7 +1,10 @@
 body {
-    background: gold;
-    color: blue;
+    /*background: gold;*/
+    background: url("I58SuG.jpg");
+    color: white;
     font-family: "Comic Sans MS";
+    background-size: cover;
+    font-size: 15px;
 }
 
 .locationLabel {
@@ -13,3 +16,9 @@ body {
     font-weight: bold;
     font-size: 25px;
 }
+
+.citiesTextField {
+    color: white;
+    background-color: gray;
+}
+

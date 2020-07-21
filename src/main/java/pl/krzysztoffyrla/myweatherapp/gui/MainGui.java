@@ -47,6 +47,7 @@ public class MainGui extends VerticalLayout {
     private Image iconImg;
 
     public MainGui() {
+        //this.getElement().getStyle().set("background-image", "url('QhZN6g.jpg");
         iconImg = new Image();
         setHeader();
         setLogo();
@@ -64,7 +65,8 @@ public class MainGui extends VerticalLayout {
     }
 
     public void setHeader() {
-        Label title = new Label("My Weather Application");
+        Label title = new Label("My Weather Application by Krzysztof Fyrla");
+        title.getStyle().set("font-size", "25px");
 
         HorizontalLayout headerLabel = new HorizontalLayout(title);
         headerLabel.setJustifyContentMode(JustifyContentMode.CENTER);
@@ -92,14 +94,23 @@ public class MainGui extends VerticalLayout {
         selectTemperature.setItems(items);
         selectTemperature.setValue(items.get(0));
         selectTemperature.setWidth("6%");
+        selectTemperature.getStyle().set("color", "white");
+        selectTemperature.getStyle().set("background-color", "gray");
+        selectTemperature.getStyle().set("border-radius", "15px");
 
         // Cities Text Field
         citiesTextField = new TextField();
         citiesTextField.setWidth("20%");
+        citiesTextField.getStyle().set("color", "white");
+        citiesTextField.getStyle().set("background-color", "gray");
+        citiesTextField.getStyle().set("border-radius", "15px");
 
         // Search Button
         searchButton = new Button();
         searchButton.setIcon(VaadinIcon.SEARCH.create());
+        searchButton.getStyle().set("color", "white");
+        searchButton.getStyle().set("background-color", "gray");
+        searchButton.getStyle().set("border-radius", "15px");
 
         HorizontalLayout headerSelector = new HorizontalLayout(selectTemperature, citiesTextField, searchButton);
         headerSelector.setJustifyContentMode(JustifyContentMode.CENTER);
