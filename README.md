@@ -6,6 +6,7 @@ My Weather App is a simple forecast app, which uses some APIs to fetch forecast 
 ## Technologies
 Project is created with:
 * JAVA version 8
+* Spring Boot
 * Maven
 * Vaadin
 * OpenWeather API
