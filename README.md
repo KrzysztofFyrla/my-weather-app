@@ -10,6 +10,7 @@ Project is created with:
 * Maven
 * Vaadin
 * OpenWeather API
+* Heroku
 
 ## Information
 You will find more information:
